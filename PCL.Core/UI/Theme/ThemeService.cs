@@ -246,8 +246,8 @@ public sealed partial class ThemeService
     /// </summary>
     public static void ApplyColorResources()
     {
-        // Spectrum uses a stable cyan-blue accent palette; the rainbow effect belongs
-        // to the page background, not to semantic brushes used by text and controls.
+        // Spectrum uses a stable violet accent palette; gradients belong to the page and title
+        // backgrounds, not to semantic brushes used by text and controls.
         var colors = _CalculateColors(CurrentTone, GetCurrentThemeArgs());
         foreach (var c in colors) c.Apply();
     }
