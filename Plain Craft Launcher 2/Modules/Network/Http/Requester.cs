@@ -123,6 +123,26 @@ public static class Requester
             using var cts = new CancellationTokenSource();
             cts.CancelAfter(param.Timeout <= 0 ? 30000 : param.Timeout);
             response = await NetworkService.GetClient().SendAsync(request, cts.Token).ConfigureAwait(false);
+            if (!response.IsSuccessStatusCode)
+            {
+                // Log the actual responding host and status before the response is disposed.
+                // Deliberately omit the query string and request headers to avoid leaking tokens/API keys.
+                var requestUri = Uri.TryCreate(url, UriKind.Absolute, out var parsedUri)
+                    ? $"{parsedUri.Scheme}://{parsedUri.Authority}{parsedUri.AbsolutePath}"
+                    : url;
+                var responseBody = "";
+                try
+                {
+                    responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+                    if (responseBody.Length > 512) responseBody = responseBody[..512] + "…";
+                }
+                catch
+                {
+                    // The status and host are still useful if the response body cannot be read.
+                }
+
+                ModBase.Log($"[Network] HTTP 请求失败：{request.Method} {requestUri}，状态码 {(int)response.StatusCode} {response.ReasonPhrase}。响应：{responseBody}");
+            }
             EnsureSuccess(response);
             return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
