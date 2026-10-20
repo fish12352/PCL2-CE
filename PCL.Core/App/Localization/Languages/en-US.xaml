@@ -3224,7 +3224,9 @@
     <sys:String x:Key="Setup.Ui.Theme.Color.Black">Black</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.Gold">Gold</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.Red">Red</sys:String>
-    <sys:String x:Key="Setup.Ui.Theme.Color.Spectrum">Spectrum Gradient</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Spectrum">Violet Twilight</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Sunset">Golden Dawn</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.QingLan">Jade Mist</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.SkyBlue">Sky Blue</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Dark">Dark</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.DarkColor">Dark theme color</sys:String>

@@ -2016,7 +2016,14 @@ public static class ModDownload
         var urls = new List<KeyValuePair<string, int>>();
         var mcimUrl = DlSourceModGet(url);
         if ((mcimUrl ?? "") != (url ?? ""))
-            switch (Config.Download.Comp.CompSourceSolution)
+        {
+            // 没有嵌入 CurseForge API Key 时，官方 API 必然无法鉴权；直接走镜像，避免无意义的 403 重试。
+            if (url.StartsWith("https://api.curseforge.com/", StringComparison.OrdinalIgnoreCase) &&
+                string.IsNullOrWhiteSpace(Secrets.CurseForgeAPIKey))
+            {
+                urls.Add(new KeyValuePair<string, int>(mcimUrl, 10));
+            }
+            else switch (Config.Download.Comp.CompSourceSolution)
             {
                 case 0:
                 {
@@ -2042,6 +2049,7 @@ public static class ModDownload
                     break;
                 }
             }
+        }
 
         var exs = "";
         foreach (var Source in urls)

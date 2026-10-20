@@ -3224,7 +3224,9 @@
     <sys:String x:Key="Setup.Ui.Theme.Color.Black">墨黑</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.Gold">鎏金</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.Red">绯红</sys:String>
-    <sys:String x:Key="Setup.Ui.Theme.Color.Spectrum">彩虹渐变</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Spectrum">星河暮紫</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Sunset">晴霞流金</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.QingLan">青岚</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Color.SkyBlue">天空蓝</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.Dark">深色</sys:String>
     <sys:String x:Key="Setup.Ui.Theme.DarkColor">深色配色</sys:String>

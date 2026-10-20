@@ -163,6 +163,10 @@ public sealed partial class ThemeService
             ColorTheme.Gold => (82, 0.06, 0.05),
             ColorTheme.Red => (25, -0.02, -0.05),
             ColorTheme.Spectrum => (292, 0.02, -0.15),
+            // 晴霞流金：强调色保持金橙色，渐变只用于背景。
+            ColorTheme.Sunset => (48, 0.04, -0.08),
+            // 青岚：强调色采用青绿色系，背景渐变由 ThemeManager 单独绘制。
+            ColorTheme.QingLan => (170, 0.02, -0.08),
 #if DEBUG
             _ => ((int)theme, 0, 0)
 #else
@@ -244,25 +248,11 @@ public sealed partial class ThemeService
     /// <summary>
     /// 应用彩色配色到 WPF 资源字典。
     /// </summary>
-    private static CatColorResource[] _CalculateSpectrumColors(ToneProfile tone) => [
-        LabColor.FromLch(_AdjustLinear(tone.L1, 0.002), _AdjustLinear(tone.C1, -0.0375), 350).ToCatColor("1"),
-        LabColor.FromLch(_AdjustLinear(tone.L2, 0.02), _AdjustLinear(tone.C2, -0.15), 20).ToCatColor("2"),
-        LabColor.FromLch(_AdjustLinear(tone.L3, 0.02), _AdjustLinear(tone.C3, -0.15), 55).ToCatColor("3"),
-        LabColor.FromLch(_AdjustLinear(tone.L4, 0.02), _AdjustLinear(tone.C4, -0.15), 95).ToCatColor("4"),
-        LabColor.FromLch(_AdjustLinear(tone.L5, 0.02), _AdjustLinear(tone.C5, -0.15), 155).ToCatColor("5"),
-        LabColor.FromLch(_AdjustLinear(tone.L6, 0.02), _AdjustLinear(tone.C6, -0.15), 195).ToCatColor("6"),
-        LabColor.FromLch(_AdjustLinear(tone.L7, 0.02), _AdjustLinear(tone.C7, -0.15), 245).ToCatColor("7"),
-        LabColor.FromLch(_AdjustLinear(tone.L8, 0.02), _AdjustLinear(tone.C8, -0.15), 290).ToCatColor("8"),
-        LabColor.FromLch(_AdjustLinear(tone.L8, 0.02), _AdjustLinear(tone.C8, -0.15), 290, tone.ASemiTransparent).ToCatColor("SemiTransparent", false),
-        LabColor.FromLch(_AdjustLinear(tone.L5, 0.02), _AdjustLinear(tone.C5, -0.15), 320).ToCatColor("Bg0"),
-        LabColor.FromLch(_AdjustLinear(tone.L7, 0.02), _AdjustLinear(tone.C7, -0.15), 245, tone.ASemiWhite).ToCatColor("Bg1"),
-    ];
-
     public static void ApplyColorResources()
     {
-        var colors = CurrentTheme == ColorTheme.Spectrum
-            ? _CalculateSpectrumColors(CurrentTone)
-            : _CalculateColors(CurrentTone, GetCurrentThemeArgs());
+        // Spectrum uses a stable violet accent palette; gradients belong to the page and title
+        // backgrounds, not to semantic brushes used by text and controls.
+        var colors = _CalculateColors(CurrentTone, GetCurrentThemeArgs());
         foreach (var c in colors) c.Apply();
     }
 }

@@ -389,6 +389,7 @@ public partial class PageToolsGameLink
             try
             {
                 var serverNumber = 0;
+                var hasValidServer = false;
                 JsonObject jObj = null;
 
                 #region 多服务器轮询获取公告
@@ -396,8 +397,18 @@ public partial class PageToolsGameLink
                 while (serverNumber < Secrets.LinkServers.Length)
                     try
                     {
+                        var serverRoot = Secrets.LinkServers[serverNumber]?.Trim().TrimEnd('/');
+                        if (!Uri.TryCreate(serverRoot, UriKind.Absolute, out var serverUri) ||
+                            (serverUri.Scheme != Uri.UriSchemeHttp && serverUri.Scheme != Uri.UriSchemeHttps))
+                        {
+                            LogWrapper.Warn($"[Link] Skipping invalid lobby server root at index {serverNumber}");
+                            serverNumber++;
+                            continue;
+                        }
+
+                        hasValidServer = true;
                         // 获取缓存版本号
-                        var cacheRes = Requester.Fetch($"{Secrets.LinkServers[serverNumber]}/api/link/v2/cache.ini",
+                        var cacheRes = Requester.Fetch($"{serverRoot}/api/link/v2/cache.ini",
                             new FetchParam
                             {
                                 Method = "GET",
@@ -415,7 +426,7 @@ public partial class PageToolsGameLink
                         {
                             LogWrapper.Info("[Link] Fetching new announcement data");
                             var received = Requester.Fetch(
-                                $"{Secrets.LinkServers[serverNumber]}/api/link/v2/announce.json",
+                                $"{serverRoot}/api/link/v2/announce.json",
                                 new FetchParam
                                 {
                                     Method = "GET",
@@ -446,6 +457,19 @@ public partial class PageToolsGameLink
                     }
 
                 #endregion
+
+                if (jObj is null && !hasValidServer)
+                {
+                    if (!TryApplyCurrentAnnouncementRequest(requestId, () =>
+                        {
+                            _announcementLoadState = AnnouncementLoadState.Failed;
+                            HintAnnounce.Visibility = Visibility.Visible;
+                            HintAnnounce.Theme = MyHint.Themes.Red;
+                            HintAnnounce.Text = Lang.Text("Tools.GameLink.Error.ConnectFailed");
+                        })) return;
+                    LogWrapper.Warn("[Link] Lobby announcement skipped because no valid server root is configured");
+                    return;
+                }
 
                 if (jObj is null) throw new Exception("Failed to fetch lobby data");
                 if (!IsCurrentAnnouncementRequest(requestId)) return;

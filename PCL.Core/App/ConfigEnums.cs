@@ -43,7 +43,9 @@ public enum ColorTheme
     Black = 6,
     Gold = 7,
     Red = 8,
-    Spectrum = 9
+    Spectrum = 9,
+    Sunset = 10,
+    QingLan = 11
 }
 
 /// <summary>

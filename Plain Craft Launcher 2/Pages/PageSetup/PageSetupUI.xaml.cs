@@ -13,8 +13,8 @@ namespace PCL;
 public partial class PageSetupUI
 {
     public string[] ThemeColors => Basics.IsAprilFool
-        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum")]
-        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum")];
+        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum"), Lang.Text("Setup.Ui.Theme.Color.Sunset"), Lang.Text("Setup.Ui.Theme.Color.QingLan")]
+        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum"), Lang.Text("Setup.Ui.Theme.Color.Sunset"), Lang.Text("Setup.Ui.Theme.Color.QingLan")];
 
     private static int ThemeToSelection(ColorTheme theme) => theme switch
     {
@@ -24,6 +24,8 @@ public partial class PageSetupUI
         ColorTheme.Gold => Basics.IsAprilFool ? 7 : 6,
         ColorTheme.Red => Basics.IsAprilFool ? 8 : 7,
         ColorTheme.Spectrum => Basics.IsAprilFool ? 9 : 8,
+        ColorTheme.Sunset => Basics.IsAprilFool ? 10 : 9,
+        ColorTheme.QingLan => Basics.IsAprilFool ? 11 : 10,
         ColorTheme.HmclBlue when !Basics.IsAprilFool => 1,
         _ => (int)theme
     };
@@ -41,6 +43,8 @@ public partial class PageSetupUI
             7 => ColorTheme.Gold,
             8 => ColorTheme.Red,
             9 => ColorTheme.Spectrum,
+            10 => ColorTheme.Sunset,
+            11 => ColorTheme.QingLan,
             _ => ColorTheme.SkyBlue
         }
         : index switch
@@ -54,6 +58,8 @@ public partial class PageSetupUI
             6 => ColorTheme.Gold,
             7 => ColorTheme.Red,
             8 => ColorTheme.Spectrum,
+            9 => ColorTheme.Sunset,
+            10 => ColorTheme.QingLan,
             _ => ColorTheme.SkyBlue
         };
     
