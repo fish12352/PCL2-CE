@@ -12,9 +12,35 @@ namespace PCL;
 
 public partial class PageSetupUI
 {
-    public string[] ThemeColors => Basics.IsAprilFool 
-        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl")]
-        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue")];
+    public string[] ThemeColors => Basics.IsAprilFool
+        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl"), "Violet / 紫雾"]
+        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), "Violet / 紫雾"];
+
+    private static int ThemeToSelection(ColorTheme theme) => theme switch
+    {
+        ColorTheme.Violet => Basics.IsAprilFool ? 4 : 3,
+        ColorTheme.HmclBlue when !Basics.IsAprilFool => 1,
+        _ => (int)theme
+    };
+
+    private static ColorTheme SelectionToTheme(int index) => Basics.IsAprilFool
+        ? index switch
+        {
+            4 => ColorTheme.Violet,
+            0 => ColorTheme.SkyBlue,
+            1 => ColorTheme.CatBlue,
+            2 => ColorTheme.DeathBlue,
+            3 => ColorTheme.HmclBlue,
+            _ => ColorTheme.SkyBlue
+        }
+        : index switch
+        {
+            3 => ColorTheme.Violet,
+            0 => ColorTheme.SkyBlue,
+            1 => ColorTheme.CatBlue,
+            2 => ColorTheme.DeathBlue,
+            _ => ColorTheme.SkyBlue
+        };
     
     public new bool isLoaded;
 
@@ -52,8 +78,8 @@ public partial class PageSetupUI
             SliderLauncherOpacity.Value = Config.Preference.Theme.WindowOpacity;
             CheckLauncherLogo.Checked = Config.Preference.ShowStartupLogo;
             ComboDarkMode.SelectedIndex = (int)Config.Preference.Theme.ColorMode;
-            ComboDarkColor.SelectedIndex = (int)Config.Preference.Theme.DarkColor;
-            ComboLightColor.SelectedIndex = (int)Config.Preference.Theme.LightColor;
+            ComboDarkColor.SelectedIndex = ThemeToSelection(Config.Preference.Theme.DarkColor);
+            ComboLightColor.SelectedIndex = ThemeToSelection(Config.Preference.Theme.LightColor);
             CheckShowLaunchingHint.Checked = Config.Preference.ShowLaunchingHint;
 
             // 字体设置
@@ -663,7 +689,8 @@ public partial class PageSetupUI
     private void ThemeColor_Change(object senderRaw, SelectionChangedEventArgs e)
     {
         var sender = (MyComboBox)senderRaw;
-        SetByTag(sender.Tag?.ToString(), sender.SelectedIndex);
+        if (ModAnimation.AniControlEnabled == 0 && sender.SelectedIndex >= 0)
+            SetByTag(sender.Tag?.ToString(), SelectionToTheme(sender.SelectedIndex));
         ThemeManager.ThemeRefresh();
     }
 
