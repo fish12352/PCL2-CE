@@ -11,4 +11,9 @@
     <sys:String x:Key="Meta.Name">Español (España)</sys:String>
 
     <sys:String x:Key="Setup.Ui.Theme.Color.Violet">Violeta</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Green">Verde</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Black">Negro</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Gold">Dorado</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Red">Rojo</sys:String>
+    <sys:String x:Key="Setup.Ui.Theme.Color.Spectrum">Degradado espectral</sys:String>
 </ResourceDictionary>
