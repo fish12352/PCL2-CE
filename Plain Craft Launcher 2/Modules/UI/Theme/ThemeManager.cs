@@ -43,7 +43,7 @@ public static class ThemeManager
     {
         // Always clear the overlay first so switching away from Spectrum cannot leave a stale title gradient.
         ModMain.frmMain.PanTitleGradient.Visibility = Visibility.Collapsed;
-        if (Config.Preference.Background.BackgroundColorful || ThemeService.CurrentTheme is ColorTheme.Spectrum or ColorTheme.Sunset)
+        if (Config.Preference.Background.BackgroundColorful || ThemeService.CurrentTheme is ColorTheme.Spectrum or ColorTheme.Sunset or ColorTheme.QingLan)
         {
             var brush = new LinearGradientBrush
             {
@@ -62,9 +62,9 @@ public static class ThemeManager
                 brush.GradientStops.Add(new GradientStop
                     { Offset = 1.0d, Color = LabColor.FromLch(IsDarkMode ? 0.17d : 0.91d, tone.C5 * 0.55d, 315) });
             }
-            else if (ThemeService.CurrentTheme == ColorTheme.Green)
+            else if (ThemeService.CurrentTheme == ColorTheme.QingLan)
             {
-                // 青岚：保留指定的绿青双色渐变。
+                // 青岚：独立的绿青渐变，不覆盖原有青绿色主题。
                 brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x00, 0xB0, 0x9B), 0.0d));
                 brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x96, 0xC9, 0x3D), 1.0d));
             }
