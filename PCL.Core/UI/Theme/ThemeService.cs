@@ -162,7 +162,7 @@ public sealed partial class ThemeService
             ColorTheme.Black => (0, -0.12, -1.0),
             ColorTheme.Gold => (82, 0.06, 0.05),
             ColorTheme.Red => (25, -0.02, -0.05),
-            ColorTheme.Spectrum => (210, 0.02, -0.15),
+            ColorTheme.Spectrum => (292, 0.02, -0.15),
 #if DEBUG
             _ => ((int)theme, 0, 0)
 #else
