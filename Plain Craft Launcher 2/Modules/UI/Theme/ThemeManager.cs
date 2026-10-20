@@ -41,7 +41,7 @@ public static class ThemeManager
     // 主页面背景
     private static void RefreshBackground()
     {
-        if (Config.Preference.Background.BackgroundColorful)
+        if (Config.Preference.Background.BackgroundColorful || ThemeService.CurrentTheme == ColorTheme.Spectrum)
         {
             var brush = new LinearGradientBrush
             {
