@@ -41,6 +41,8 @@ public static class ThemeManager
     // 主页面背景
     private static void RefreshBackground()
     {
+        // Always clear the overlay first so switching away from Spectrum cannot leave a stale title gradient.
+        ModMain.frmMain.PanTitleGradient.Visibility = Visibility.Collapsed;
         if (Config.Preference.Background.BackgroundColorful || ThemeService.CurrentTheme == ColorTheme.Spectrum)
         {
             var brush = new LinearGradientBrush
