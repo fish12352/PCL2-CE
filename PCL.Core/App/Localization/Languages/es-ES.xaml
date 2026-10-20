@@ -10,4 +10,5 @@
     <sys:String x:Key="Meta.Code">es-ES</sys:String>
     <sys:String x:Key="Meta.Name">Español (España)</sys:String>
 
+    <sys:String x:Key="Setup.Ui.Theme.Color.Violet">Violeta</sys:String>
 </ResourceDictionary>
