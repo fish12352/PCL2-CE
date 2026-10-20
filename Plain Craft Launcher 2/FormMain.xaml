@@ -119,6 +119,8 @@
                                               MouseLeftButtonDown="FormDragMove"
                                               WindowChrome.IsHitTestVisibleInChrome="True"
                                               >
+                    <Border x:Name="PanTitleGradient" IsHitTestVisible="False"
+                            Visibility="Collapsed" Panel.ZIndex="-1" />
                     <!-- <Grid.Background> -->
                     <!--     <LinearGradientBrush EndPoint="1,0" StartPoint="0,0"> -->
                     <!--         <GradientStop Color="{StaticResource ColorObject4}" Offset="0"/> -->
