@@ -54,22 +54,12 @@ public static class ThemeManager
             var darkLight = IsDarkMode ? 0.2d : 1d;
             if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
             {
-                // Spread the spectrum evenly so the warm yellow/orange segment cannot
-                // dominate the entire background. Keep chroma restrained for readability.
+                // Use a restrained violet-to-blue gradient instead of a full rainbow.
+                // Keep the accent hue independent so buttons and semantic colors stay solid violet.
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.0d, Color = LabColor.FromLch(0.86d * darkLight, tone.C5 * 0.65d, 330) });
+                    { Offset = 0.0d, Color = LabColor.FromLch(IsDarkMode ? 0.22d : 0.96d, tone.C5 * 0.55d, 275) });
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.16d, Color = LabColor.FromLch(0.90d * darkLight, tone.C6 * 0.65d, 20) });
-                brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.33d, Color = LabColor.FromLch(0.94d * darkLight, tone.C6 * 0.65d, 75) });
-                brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.5d, Color = LabColor.FromLch(0.94d * darkLight, tone.C6 * 0.65d, 145) });
-                brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.67d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6 * 0.65d, 205) });
-                brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.84d, Color = LabColor.FromLch(0.89d * darkLight, tone.C6 * 0.65d, 265) });
-                brush.GradientStops.Add(new GradientStop
-                    { Offset = 1.0d, Color = LabColor.FromLch(0.86d * darkLight, tone.C5 * 0.65d, 320) });
+                    { Offset = 1.0d, Color = LabColor.FromLch(IsDarkMode ? 0.17d : 0.91d, tone.C5 * 0.55d, 315) });
             }
             else
             {
@@ -83,6 +73,28 @@ public static class ThemeManager
                     { Offset = 1.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, hue2) });
             }
             ModMain.frmMain.PanForm.Background = brush;
+
+            if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
+            {
+                // A stronger violet/indigo blend in the title bar, while action buttons
+                // continue to use the ordinary solid accent resources.
+                var titleBrush = new LinearGradientBrush
+                {
+                    StartPoint = new Point(0, 0),
+                    EndPoint = new Point(1, 0)
+                };
+                titleBrush.GradientStops.Add(new GradientStop(
+                    LabColor.FromLch(IsDarkMode ? 0.43d : 0.48d, 0.16d, 285), 0.0d));
+                titleBrush.GradientStops.Add(new GradientStop(
+                    LabColor.FromLch(IsDarkMode ? 0.37d : 0.43d, 0.16d, 315), 1.0d));
+                titleBrush.Freeze();
+                ModMain.frmMain.PanTitle.Background = titleBrush;
+            }
+            else
+            {
+                ModMain.frmMain.PanTitle.BackgroundBrush =
+                    (SolidColorBrush)System.Windows.Application.Current.Resources["ColorBrush3"];
+            }
         }
         else
         {
