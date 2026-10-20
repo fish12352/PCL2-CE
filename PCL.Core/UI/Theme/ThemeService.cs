@@ -163,6 +163,8 @@ public sealed partial class ThemeService
             ColorTheme.Gold => (82, 0.06, 0.05),
             ColorTheme.Red => (25, -0.02, -0.05),
             ColorTheme.Spectrum => (292, 0.02, -0.15),
+            // 晴霞流金：强调色保持金橙色，渐变只用于背景。
+            ColorTheme.Sunset => (48, 0.04, -0.08),
 #if DEBUG
             _ => ((int)theme, 0, 0)
 #else
