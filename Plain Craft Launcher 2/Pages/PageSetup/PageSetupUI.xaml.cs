@@ -14,7 +14,7 @@ public partial class PageSetupUI
 {
     public string[] ThemeColors => Basics.IsAprilFool
         ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum"), Lang.Text("Setup.Ui.Theme.Color.Sunset"), Lang.Text("Setup.Ui.Theme.Color.QingLan")]
-        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum"), Lang.Text("Setup.Ui.Theme.Color.Sunset")];
+        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum"), Lang.Text("Setup.Ui.Theme.Color.Sunset"), Lang.Text("Setup.Ui.Theme.Color.QingLan")];
 
     private static int ThemeToSelection(ColorTheme theme) => theme switch
     {
