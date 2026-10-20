@@ -118,7 +118,7 @@
                 <local:AnimatedBackgroundGrid Grid.Row="0" x:Name="PanTitle" Height="48"
                                               MouseLeftButtonDown="FormDragMove"
                                               WindowChrome.IsHitTestVisibleInChrome="True"
-                                              BackgroundBrush="{DynamicResource ColorBrush3}">
+                                              >
                     <!-- <Grid.Background> -->
                     <!--     <LinearGradientBrush EndPoint="1,0" StartPoint="0,0"> -->
                     <!--         <GradientStop Color="{StaticResource ColorObject4}" Offset="0"/> -->
