@@ -89,7 +89,7 @@ public static class ThemeManager
             }
             ModMain.frmMain.PanForm.Background = brush;
 
-            if (ThemeService.CurrentTheme is ColorTheme.Spectrum or ColorTheme.Sunset)
+            if (ThemeService.CurrentTheme is ColorTheme.Spectrum or ColorTheme.Sunset or ColorTheme.QingLan)
             {
                 // 标题栏使用与页面一致的渐变；按钮仍使用普通纯色强调色。
                 var titleBrush = new LinearGradientBrush
@@ -104,12 +104,17 @@ public static class ThemeManager
                     titleBrush.GradientStops.Add(new GradientStop(
                         LabColor.FromLch(IsDarkMode ? 0.37d : 0.43d, 0.16d, 315), 1.0d));
                 }
-                else
+                else if (ThemeService.CurrentTheme == ColorTheme.Sunset)
                 {
                     titleBrush.GradientStops.Add(new GradientStop(
                         IsDarkMode ? Color.FromRgb(0x8C, 0x6A, 0x28) : Color.FromRgb(0xD8, 0xA8, 0x32), 0.0d));
                     titleBrush.GradientStops.Add(new GradientStop(
                         IsDarkMode ? Color.FromRgb(0x8A, 0x4A, 0x75) : Color.FromRgb(0xD4, 0x68, 0xA6), 1.0d));
+                }
+                else
+                {
+                    titleBrush.GradientStops.Add(new GradientStop(Color.FromRgb(0x00, 0xB0, 0x9B), 0.0d));
+                    titleBrush.GradientStops.Add(new GradientStop(Color.FromRgb(0x96, 0xC9, 0x3D), 1.0d));
                 }
                 titleBrush.Freeze();
                 ModMain.frmMain.PanTitle.BackgroundBrush =
