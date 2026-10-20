@@ -26,7 +26,8 @@ public static class RequestSigning
             || parsedUri.Host == "edge.forgecdn.net"
             || parsedUri.Host == "mediafilez.forgecdn.net"))
         {
-            client.Headers.Add("x-api-key", Secrets.CurseForgeAPIKey);
+            if (!string.IsNullOrWhiteSpace(Secrets.CurseForgeAPIKey))
+                client.Headers.Add("x-api-key", Secrets.CurseForgeAPIKey);
         }
         var userAgent = !string.IsNullOrEmpty(customUserAgent)
             ? customUserAgent
