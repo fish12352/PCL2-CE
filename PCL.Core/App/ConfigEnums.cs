@@ -37,7 +37,13 @@ public enum ColorTheme
     SkyBlue = 0,
     CatBlue = 1,
     DeathBlue = 2,
-    HmclBlue = 3
+    HmclBlue = 3,
+    Violet = 4,
+    Green = 5,
+    Black = 6,
+    Gold = 7,
+    Red = 8,
+    Spectrum = 9
 }
 
 /// <summary>

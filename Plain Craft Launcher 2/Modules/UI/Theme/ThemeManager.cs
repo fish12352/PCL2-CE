@@ -41,7 +41,7 @@ public static class ThemeManager
     // 主页面背景
     private static void RefreshBackground()
     {
-        if (Config.Preference.Background.BackgroundColorful)
+        if (Config.Preference.Background.BackgroundColorful || ThemeService.CurrentTheme == ColorTheme.Spectrum)
         {
             var brush = new LinearGradientBrush
             {
@@ -50,16 +50,32 @@ public static class ThemeManager
             };
 
             var hue = ThemeService.GetCurrentThemeArgs().Hue;
-            var hue1 = hue - 15;
-            var hue2 = hue + 15;
             var tone = ThemeService.CurrentTone;
             var darkLight = IsDarkMode ? 0.2d : 1d;
-            brush.GradientStops.Add(new GradientStop
-                { Offset = -0.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, hue1) });
-            brush.GradientStops.Add(new GradientStop
-                { Offset = 0.4d, Color = LabColor.FromLch(0.96d * darkLight, tone.C7, hue) });
-            brush.GradientStops.Add(new GradientStop
-                { Offset = 1.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, hue2) });
+            if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
+            {
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = -0.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, 330) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 0.25d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6, 55) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 0.55d, Color = LabColor.FromLch(0.96d * darkLight, tone.C7, 150) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 0.8d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6, 235) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 1.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, 300) });
+            }
+            else
+            {
+                var hue1 = hue - 15;
+                var hue2 = hue + 15;
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = -0.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, hue1) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 0.4d, Color = LabColor.FromLch(0.96d * darkLight, tone.C7, hue) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 1.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, hue2) });
+            }
             ModMain.frmMain.PanForm.Background = brush;
         }
         else

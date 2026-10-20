@@ -12,9 +12,50 @@ namespace PCL;
 
 public partial class PageSetupUI
 {
-    public string[] ThemeColors => Basics.IsAprilFool 
-        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl")]
-        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue")];
+    public string[] ThemeColors => Basics.IsAprilFool
+        ? [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Hmcl"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum")]
+        : [Lang.Text("Setup.Ui.Theme.Color.SkyBlue"), Lang.Text("Setup.Ui.Theme.Color.CatBlue"), Lang.Text("Setup.Ui.Theme.Color.CrashBlue"), Lang.Text("Setup.Ui.Theme.Color.Violet"), Lang.Text("Setup.Ui.Theme.Color.Green"), Lang.Text("Setup.Ui.Theme.Color.Black"), Lang.Text("Setup.Ui.Theme.Color.Gold"), Lang.Text("Setup.Ui.Theme.Color.Red"), Lang.Text("Setup.Ui.Theme.Color.Spectrum")];
+
+    private static int ThemeToSelection(ColorTheme theme) => theme switch
+    {
+        ColorTheme.Violet => Basics.IsAprilFool ? 4 : 3,
+        ColorTheme.Green => Basics.IsAprilFool ? 5 : 4,
+        ColorTheme.Black => Basics.IsAprilFool ? 6 : 5,
+        ColorTheme.Gold => Basics.IsAprilFool ? 7 : 6,
+        ColorTheme.Red => Basics.IsAprilFool ? 8 : 7,
+        ColorTheme.Spectrum => Basics.IsAprilFool ? 9 : 8,
+        ColorTheme.HmclBlue when !Basics.IsAprilFool => 1,
+        _ => (int)theme
+    };
+
+    private static ColorTheme SelectionToTheme(int index) => Basics.IsAprilFool
+        ? index switch
+        {
+            0 => ColorTheme.SkyBlue,
+            1 => ColorTheme.CatBlue,
+            2 => ColorTheme.DeathBlue,
+            3 => ColorTheme.HmclBlue,
+            4 => ColorTheme.Violet,
+            5 => ColorTheme.Green,
+            6 => ColorTheme.Black,
+            7 => ColorTheme.Gold,
+            8 => ColorTheme.Red,
+            9 => ColorTheme.Spectrum,
+            _ => ColorTheme.SkyBlue
+        }
+        : index switch
+        {
+            0 => ColorTheme.SkyBlue,
+            1 => ColorTheme.CatBlue,
+            2 => ColorTheme.DeathBlue,
+            3 => ColorTheme.Violet,
+            4 => ColorTheme.Green,
+            5 => ColorTheme.Black,
+            6 => ColorTheme.Gold,
+            7 => ColorTheme.Red,
+            8 => ColorTheme.Spectrum,
+            _ => ColorTheme.SkyBlue
+        };
     
     public new bool isLoaded;
 
@@ -52,8 +93,8 @@ public partial class PageSetupUI
             SliderLauncherOpacity.Value = Config.Preference.Theme.WindowOpacity;
             CheckLauncherLogo.Checked = Config.Preference.ShowStartupLogo;
             ComboDarkMode.SelectedIndex = (int)Config.Preference.Theme.ColorMode;
-            ComboDarkColor.SelectedIndex = (int)Config.Preference.Theme.DarkColor;
-            ComboLightColor.SelectedIndex = (int)Config.Preference.Theme.LightColor;
+            ComboDarkColor.SelectedIndex = ThemeToSelection(Config.Preference.Theme.DarkColor);
+            ComboLightColor.SelectedIndex = ThemeToSelection(Config.Preference.Theme.LightColor);
             CheckShowLaunchingHint.Checked = Config.Preference.ShowLaunchingHint;
 
             // 字体设置
@@ -663,7 +704,8 @@ public partial class PageSetupUI
     private void ThemeColor_Change(object senderRaw, SelectionChangedEventArgs e)
     {
         var sender = (MyComboBox)senderRaw;
-        SetByTag(sender.Tag?.ToString(), sender.SelectedIndex);
+        if (ModAnimation.AniControlEnabled == 0 && sender.SelectedIndex >= 0)
+            SetByTag(sender.Tag?.ToString(), SelectionToTheme(sender.SelectedIndex));
         ThemeManager.ThemeRefresh();
     }
 
