@@ -88,7 +88,11 @@ public static class ThemeManager
                 titleBrush.GradientStops.Add(new GradientStop(
                     LabColor.FromLch(IsDarkMode ? 0.37d : 0.43d, 0.16d, 315), 1.0d));
                 titleBrush.Freeze();
-                ModMain.frmMain.PanTitle.Background = titleBrush;
+                ModMain.frmMain.PanTitleGradient.Visibility = Visibility.Collapsed;
+                ModMain.frmMain.PanTitle.BackgroundBrush =
+                    (SolidColorBrush)System.Windows.Application.Current.Resources["ColorBrush3"];
+                ModMain.frmMain.PanTitleGradient.Background = titleBrush;
+                ModMain.frmMain.PanTitleGradient.Visibility = Visibility.Visible;
             }
             else
             {
