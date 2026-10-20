@@ -165,6 +165,8 @@ public sealed partial class ThemeService
             ColorTheme.Spectrum => (292, 0.02, -0.15),
             // 晴霞流金：强调色保持金橙色，渐变只用于背景。
             ColorTheme.Sunset => (48, 0.04, -0.08),
+            // 青岚：强调色采用青绿色系，背景渐变由 ThemeManager 单独绘制。
+            ColorTheme.QingLan => (170, 0.02, -0.08),
 #if DEBUG
             _ => ((int)theme, 0, 0)
 #else
