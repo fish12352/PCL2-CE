@@ -61,6 +61,12 @@ public static class ThemeManager
                 brush.GradientStops.Add(new GradientStop
                     { Offset = 1.0d, Color = LabColor.FromLch(IsDarkMode ? 0.17d : 0.91d, tone.C5 * 0.55d, 315) });
             }
+            else if (ThemeService.CurrentTheme == ColorTheme.Green)
+            {
+                // 青岚：保留指定的绿青双色渐变。
+                brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x00, 0xB0, 0x9B), 0.0d));
+                brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x96, 0xC9, 0x3D), 1.0d));
+            }
             else
             {
                 var hue1 = hue - 15;
