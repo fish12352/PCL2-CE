@@ -56,8 +56,7 @@ public static class ThemeManager
             var darkLight = IsDarkMode ? 0.2d : 1d;
             if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
             {
-                // Use a restrained violet-to-blue gradient instead of a full rainbow.
-                // Keep the accent hue independent so buttons and semantic colors stay solid violet.
+                // 星河暮紫：页面和标题使用蓝紫渐变，强调色仍保持纯色紫。
                 brush.GradientStops.Add(new GradientStop
                     { Offset = 0.0d, Color = LabColor.FromLch(IsDarkMode ? 0.22d : 0.96d, tone.C5 * 0.55d, 275) });
                 brush.GradientStops.Add(new GradientStop
@@ -68,6 +67,14 @@ public static class ThemeManager
                 // 青岚：保留指定的绿青双色渐变。
                 brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x00, 0xB0, 0x9B), 0.0d));
                 brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x96, 0xC9, 0x3D), 1.0d));
+            }
+            else if (ThemeService.CurrentTheme == ColorTheme.Sunset)
+            {
+                // 晴霞流金：暖黄过渡到柔粉，深色模式使用低明度版本。
+                brush.GradientStops.Add(new GradientStop(
+                    IsDarkMode ? Color.FromRgb(0x5B, 0x48, 0x22) : Color.FromRgb(0xF6, 0xD3, 0x65), 0.0d));
+                brush.GradientStops.Add(new GradientStop(
+                    IsDarkMode ? Color.FromRgb(0x5B, 0x32, 0x50) : Color.FromRgb(0xF0, 0x93, 0xFB), 1.0d));
             }
             else
             {
@@ -82,21 +89,29 @@ public static class ThemeManager
             }
             ModMain.frmMain.PanForm.Background = brush;
 
-            if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
+            if (ThemeService.CurrentTheme is ColorTheme.Spectrum or ColorTheme.Sunset)
             {
-                // A stronger violet/indigo blend in the title bar, while action buttons
-                // continue to use the ordinary solid accent resources.
+                // 标题栏使用与页面一致的渐变；按钮仍使用普通纯色强调色。
                 var titleBrush = new LinearGradientBrush
                 {
                     StartPoint = new Point(0, 0),
                     EndPoint = new Point(1, 0)
                 };
-                titleBrush.GradientStops.Add(new GradientStop(
-                    LabColor.FromLch(IsDarkMode ? 0.43d : 0.48d, 0.16d, 285), 0.0d));
-                titleBrush.GradientStops.Add(new GradientStop(
-                    LabColor.FromLch(IsDarkMode ? 0.37d : 0.43d, 0.16d, 315), 1.0d));
+                if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
+                {
+                    titleBrush.GradientStops.Add(new GradientStop(
+                        LabColor.FromLch(IsDarkMode ? 0.43d : 0.48d, 0.16d, 285), 0.0d));
+                    titleBrush.GradientStops.Add(new GradientStop(
+                        LabColor.FromLch(IsDarkMode ? 0.37d : 0.43d, 0.16d, 315), 1.0d));
+                }
+                else
+                {
+                    titleBrush.GradientStops.Add(new GradientStop(
+                        IsDarkMode ? Color.FromRgb(0x8C, 0x6A, 0x28) : Color.FromRgb(0xD8, 0xA8, 0x32), 0.0d));
+                    titleBrush.GradientStops.Add(new GradientStop(
+                        IsDarkMode ? Color.FromRgb(0x8A, 0x4A, 0x75) : Color.FromRgb(0xD4, 0x68, 0xA6), 1.0d));
+                }
                 titleBrush.Freeze();
-                ModMain.frmMain.PanTitleGradient.Visibility = Visibility.Collapsed;
                 ModMain.frmMain.PanTitle.BackgroundBrush =
                     (SolidColorBrush)System.Windows.Application.Current.Resources["ColorBrush3"];
                 ModMain.frmMain.PanTitleGradient.Background = titleBrush;
