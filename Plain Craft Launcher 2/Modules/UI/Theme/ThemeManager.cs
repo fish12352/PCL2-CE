@@ -54,16 +54,22 @@ public static class ThemeManager
             var darkLight = IsDarkMode ? 0.2d : 1d;
             if (ThemeService.CurrentTheme == ColorTheme.Spectrum)
             {
+                // Spread the spectrum evenly so the warm yellow/orange segment cannot
+                // dominate the entire background. Keep chroma restrained for readability.
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = -0.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, 330) });
+                    { Offset = 0.0d, Color = LabColor.FromLch(0.86d * darkLight, tone.C5 * 0.65d, 330) });
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.25d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6, 55) });
+                    { Offset = 0.16d, Color = LabColor.FromLch(0.90d * darkLight, tone.C6 * 0.65d, 20) });
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.55d, Color = LabColor.FromLch(0.96d * darkLight, tone.C7, 150) });
+                    { Offset = 0.33d, Color = LabColor.FromLch(0.94d * darkLight, tone.C6 * 0.65d, 75) });
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 0.8d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6, 235) });
+                    { Offset = 0.5d, Color = LabColor.FromLch(0.94d * darkLight, tone.C6 * 0.65d, 145) });
                 brush.GradientStops.Add(new GradientStop
-                    { Offset = 1.1d, Color = LabColor.FromLch(0.84d * darkLight, tone.C5, 300) });
+                    { Offset = 0.67d, Color = LabColor.FromLch(0.92d * darkLight, tone.C6 * 0.65d, 205) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 0.84d, Color = LabColor.FromLch(0.89d * darkLight, tone.C6 * 0.65d, 265) });
+                brush.GradientStops.Add(new GradientStop
+                    { Offset = 1.0d, Color = LabColor.FromLch(0.86d * darkLight, tone.C5 * 0.65d, 320) });
             }
             else
             {
